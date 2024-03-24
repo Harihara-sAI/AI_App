@@ -10,7 +10,7 @@ from langchain_community.callbacks import get_openai_callback
 import os
 
 #add key in the below line
-os.environ["OPENAI_API_KEY"] = ""
+os.environ["OPENAI_API_KEY"] = "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"
  
 # Sidebar contents
 with st.sidebar:
@@ -35,7 +35,6 @@ def main():
     # upload a PDF file
     pdf_docs = st.file_uploader("Upload your PDF",type='pdf',accept_multiple_files=True)
  
-    # st.write(pdf)
     if pdf_docs:
         text=get_pdf_text(pdf_docs)
         text_splitter = RecursiveCharacterTextSplitter(
@@ -45,27 +44,12 @@ def main():
             )
         chunks = text_splitter.split_text(text=text)
  
-        # # embeddings
-        #store_name = pdf.name[:-4]
-        #st.write(f'{store_name}')
-        # st.write(chunks)
- 
-        #if os.path.exists(f"{store_name}.pkl"):
-        #    with open(f"{store_name}.pkl", "rb") as f:
-        #        VectorStore = pickle.load(f)
-            # st.write('Embeddings Loaded from the Disk')s
-        #else:
-        #    embeddings = OpenAIEmbeddings()
-        #    VectorStore = FAISS.from_texts(chunks, embedding=embeddings)
-        #    with open(f"{store_name}.pkl", "wb") as f:
-        #        pickle.dump(VectorStore, f)
- 
+        
         embeddings = OpenAIEmbeddings()
         VectorStore = FAISS.from_texts(chunks, embedding=embeddings)
  
         # Accept user questions/query
         query = st.text_input("Ask questions here:")
-        # st.write(query)
  
         if query:
             docs = VectorStore.similarity_search(query=query, k=3)
