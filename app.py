@@ -32,7 +32,7 @@ def main():
     st.header("Financial Reports Analyzer")
  
  
-    # upload a PDF file
+    # upload PDF files
     pdf_docs = st.file_uploader("Upload your PDF",type='pdf',accept_multiple_files=True)
  
     if pdf_docs:
